@@ -1,20 +1,26 @@
+import BlogLayout from "../../../components/blog/BlogLayout";
+
 export default function BlogPost({ params }) {
 
   const slug = params?.slug || "blog-post";
 
+  const title = slug
+    .split("-")
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+
   return (
-    <div style={{ padding: "40px" }}>
-      <h1>{slug.replace(/-/g, " ")}</h1>
+    <BlogLayout>
 
-      <p>
-        This is the full blog post page for: <strong>{slug}</strong>
+      <h2 className="text-2xl font-semibold mb-6">
+        {title}
+      </h2>
+
+      <p className="text-gray-600">
+        This is a placeholder blog article. Once backend or CMS integration
+        is ready, this page will fetch and render the full blog content.
       </p>
 
-      <p>
-        Here we will later load the blog content from the CMS or backend API.
-      </p>
-
-      <a href="/blog">← Back to Blog</a>
-    </div>
+    </BlogLayout>
   );
 }

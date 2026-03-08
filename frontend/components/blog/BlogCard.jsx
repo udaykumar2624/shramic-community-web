@@ -1,12 +1,18 @@
+import Link from "next/link";
+
 export default function BlogCard({ title, excerpt, slug }) {
   return (
-    <div style={{border:"1px solid #ccc", padding:"16px", marginBottom:"12px"}}>
-      <h2>{title}</h2>
-      <p>{excerpt}</p>
+   <div className="border rounded-xl p-6 shadow-sm hover:shadow-lg transition duration-300 hover:-translate-y-1">
+      <h2 className="text-xl font-semibold mb-2">{title}</h2>
 
-      <a href={`/blog/${slug}`}>
+      <p className="text-gray-600 mb-4">{excerpt}</p>
+
+      <Link
+        href={`/blog/${slug}`}
+        className="text-blue-600 font-medium hover:underline"
+      >
         Read More →
-      </a>
+      </Link>
     </div>
   );
 }

@@ -1,27 +1,33 @@
 import BlogCard from "./BlogCard";
 
-const posts = [
-  {
-    title: "Fair Labour Practices",
-    excerpt: "Understanding fair labour systems and ethical work models.",
-    slug: "fair-labour-practices",
-  },
-  {
-    title: "Shramic Community Impact",
-    excerpt: "How Shramic is helping workers across industries.",
-    slug: "shramic-community-impact",
-  },
-];
-
 export default function BlogList() {
+
+  const posts = [
+    {
+      slug: "empowering-workers",
+      title: "Empowering Workers Through Shramic",
+      excerpt: "How Shramic is helping workers get fair opportunities."
+    },
+    {
+      slug: "fair-labour-pricing",
+      title: "Fair Labour Pricing",
+      excerpt: "Understanding how the Shramic pricing model works."
+    },
+    {
+      slug: "community-impact",
+      title: "Building Community Impact",
+      excerpt: "How community platforms can improve worker livelihoods."
+    }
+  ];
+
   return (
-    <div>
-      {posts.map((post) => (
+    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {posts.map((post, index) => (
         <BlogCard
-          key={post.slug}
+          key={index}
+          slug={post.slug}
           title={post.title}
           excerpt={post.excerpt}
-          slug={post.slug}
         />
       ))}
     </div>
