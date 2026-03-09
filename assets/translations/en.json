@@ -1,0 +1,52 @@
+{
+  "app_name": "FairWork Community",
+  "app_tagline": "Fair Pay. Real Impact. Real Change.",
+
+  "nav_home": "Home",
+  "nav_metrics": "Metrics",
+  "nav_calculator": "Calculator",
+  "nav_ecosystem": "Ecosystem",
+  "nav_stories": "Stories",
+  "nav_personas": "Personas",
+
+  "hero_tag": "Empowering Fair Labour",
+  "hero_title_1": "Fair Pay.",
+  "hero_title_2": "Real Impact.",
+  "hero_title_3": "Real Change.",
+  "hero_desc": "A community-driven platform ensuring transparent, fair labour pricing — empowering workers, organizations, and policymakers with real-time data and tools.",
+  "hero_btn_calculator": "Try Pricing Engine →",
+  "hero_btn_ecosystem": "Explore Ecosystem",
+
+  "stats_workers": "Workers Protected",
+  "stats_wages": "Fair Wages Distributed",
+  "stats_states": "States Covered",
+  "stats_orgs": "Organizations",
+
+  "metrics_label": "Live Impact",
+  "metrics_title": "Dashboard Metrics",
+  "metrics_desc": "Real-time data showing the community's reach and economic impact.",
+
+  "stories_label": "Stories",
+  "stories_title": "Success Stories",
+  "stories_desc": "Real people, real change. How fair labour pricing transformed lives.",
+
+  "personas_label": "User Personas",
+  "personas_title": "Who Uses This Platform?",
+  "personas_desc": "Tap a persona to explore their journey with the platform.",
+
+  "calculator_label": "Wage Calculator",
+  "calculator_title": "Calculate Fair Wages",
+  "calculator_desc": "Select your industry, state, and work parameters to get a fair wage recommendation.",
+
+  "pricing_label": "Fair Labour",
+  "pricing_title": "Pricing Engine",
+  "pricing_desc": "Calculate fair wages based on skill level, region cost index, and industry overhead.",
+
+  "footer_copy": "© 2025 Shramic Community",
+  "footer_built": "Built with Flutter Web",
+
+  "back": "Back",
+  "reset": "Reset",
+  "fair_compliant": "Fair Labour Compliant",
+  "below_threshold": "Below Minimum Threshold"
+}
