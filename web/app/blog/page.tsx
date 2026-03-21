@@ -1,21 +1,136 @@
-export default function Blog() {
+import Link from "next/link";
+
+async function getPosts() {
+  const res = await fetch("http://localhost:5000/api/blog/posts", {
+    cache: "no-store",
+  });
+
+  if (!res.ok) return [];
+
+  return res.json();
+}
+
+function getImage(slug: string) {
+  const images: any = {
+    "fair-wage-system":
+      "https://images.unsplash.com/photo-1601597111158-2fceff292cdc?q=80&w=1200",
+
+    "shramic-community":
+      "https://images.unsplash.com/photo-1590080875515-8a3a8dc5735e?q=80&w=1200",
+
+    "labour-digitalization":
+      "https://images.unsplash.com/photo-1589927986089-35812388d1f4?q=80&w=1200",
+
+    "worker-empowerment":
+      "https://images.unsplash.com/photo-1590496793929-36417d3117de?q=80&w=1200",
+  };
+
+  return images[slug] || images["fair-wage-system"];
+}
+
+export default async function BlogPage() {
+  const posts = await getPosts();
+
   return (
-    <main className="p-10 text-center">
+    <main className="bg-gradient-to-b from-slate-950 to-black min-h-screen text-white">
 
-      <h1 className="text-4xl font-bold mb-6">
-        Shramic Blog
-      </h1>
+      {/* HERO */}
+      <section className="px-6 md:px-12 lg:px-24 pt-20 pb-16 text-center">
+        <h1 className="text-5xl md:text-6xl font-bold mb-6">
+          Stories from the Ground
+        </h1>
 
-      <p className="text-gray-600 max-w-2xl mx-auto">
-        This section will share stories, updates, and insights about
-        rural workers, communities, and fair labour initiatives.
-      </p>
-
-      <div className="mt-10">
-        <p className="text-gray-500">
-          Blog posts will appear here soon.
+        <p className="text-slate-400 max-w-2xl mx-auto text-lg">
+          Real voices. Real wages. Real empowerment.
+          Explore how Shramic is transforming labour ecosystems across rural India.
         </p>
-      </div>
+      </section>
+
+      {/* FEATURED STORY */}
+      <section className="px-6 md:px-12 lg:px-24 pb-20">
+        <div className="relative rounded-3xl overflow-hidden shadow-2xl group cursor-pointer">
+          <img
+            src="https://images.unsplash.com/photo-1509099836639-18ba1795216d?q=80&w=1600"
+            className="w-full h-[420px] object-cover group-hover:scale-105 transition duration-700"
+          />
+
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
+
+          <div className="absolute bottom-0 p-10">
+            <span className="text-emerald-400 font-semibold">Featured Story</span>
+
+            <h2 className="text-4xl font-bold mt-3 mb-4">
+              Empowering Farmers Through Fair Labour Pricing
+            </h2>
+
+            <Link href="/blog/fair-wage-system">
+              <button className="bg-emerald-500 hover:bg-emerald-600 px-6 py-3 rounded-lg font-semibold transition">
+                Read Story →
+              </button>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* IMPACT STATS */}
+      <section className="px-6 md:px-12 lg:px-24 pb-20">
+        <div className="grid md:grid-cols-3 gap-8 text-center">
+          <div>
+            <h3 className="text-4xl font-bold text-emerald-400">12,000+</h3>
+            <p className="text-slate-400 mt-2">Workers Supported</p>
+          </div>
+          <div>
+            <h3 className="text-4xl font-bold text-amber-400">₹8Cr+</h3>
+            <p className="text-slate-400 mt-2">Wages Tracked</p>
+          </div>
+          <div>
+            <h3 className="text-4xl font-bold text-sky-400">180+</h3>
+            <p className="text-slate-400 mt-2">Villages Impacted</p>
+          </div>
+        </div>
+      </section>
+
+      {/* BLOG GRID */}
+      <section className="px-6 md:px-12 lg:px-24 pb-24">
+        {posts.length === 0 ? (
+          <p className="text-center text-gray-400">
+            No stories available yet.
+          </p>
+        ) : (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+            {posts.map((post: any) => (
+              <Link href={`/blog/${post.slug}`} key={post.slug}>
+                <div className="group bg-white/5 border border-white/10 rounded-2xl overflow-hidden hover:scale-[1.03] transition duration-500 shadow-xl hover:shadow-emerald-500/20 cursor-pointer">
+
+                  <img
+                    src={getImage(post.slug)}
+                    className="h-56 w-full object-cover group-hover:scale-110 transition duration-700"
+                  />
+
+                  <div className="p-6 space-y-3">
+                    <span className="text-emerald-400 text-sm font-semibold">
+                      Blog
+                    </span>
+
+                    <h2 className="text-xl font-bold group-hover:text-emerald-400 transition">
+                      {post.title}
+                    </h2>
+
+                    <p className="text-slate-400 text-sm">
+                      {post.content}
+                    </p>
+
+                    <div className="text-emerald-400 font-semibold text-sm">
+                      Read Story →
+                    </div>
+                  </div>
+
+                </div>
+              </Link>
+            ))}
+          </div>
+        )}
+      </section>
 
     </main>
   );
