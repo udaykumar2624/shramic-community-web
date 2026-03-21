@@ -1,26 +1,25 @@
-import BlogLayout from "../../../components/blog/BlogLayout";
-
 export default function BlogPost({ params }) {
-
   const slug = params?.slug || "blog-post";
-
-  const title = slug
-    .split("-")
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" ");
+  const title = slug.replace(/-/g, " ");
 
   return (
-    <BlogLayout>
+    <div className="max-w-3xl mx-auto p-10">
+      <a href="/blog" className="text-blue-600 underline mb-6 inline-block">
+        ← Back to Blog
+      </a>
 
-      <h2 className="text-2xl font-semibold mb-6">
-        {title}
-      </h2>
+      <h1 className="text-4xl font-bold mb-6 capitalize">{title}</h1>
 
-      <p className="text-gray-600">
-        This is a placeholder blog article. Once backend or CMS integration
-        is ready, this page will fetch and render the full blog content.
+      <p className="text-gray-600 mb-6">
+        This is a placeholder blog article. Once backend API integration is completed,
+        this page will dynamically render real blog content.
       </p>
 
-    </BlogLayout>
+      <p className="text-gray-700 leading-relaxed">
+        The Shramic platform focuses on improving labour transparency, fair wage
+        distribution, and worker empowerment. This blog section will share
+        industry insights, updates, and success stories.
+      </p>
+    </div>
   );
 }
