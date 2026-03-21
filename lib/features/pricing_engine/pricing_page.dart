@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_text_styles.dart';
 import '../../core/theme/theme_colors.dart';
 import '../../models/wage_result_model.dart';
+import '../../providers/language_provider.dart';
 import '../../services/pricing_service.dart';
+import '../../services/translation_service.dart';
 import '../home/widgets/nav_bar.dart';
 import 'widgets/slider_input_widget.dart';
 import 'widgets/pricing_result_panel.dart';
@@ -20,7 +23,6 @@ class _PricingPageState extends State<PricingPage> {
   double _skill = 5;
   double _region = 100;
   double _overhead = 20;
-
   late WageResultModel _result;
 
   @override
@@ -40,6 +42,7 @@ class _PricingPageState extends State<PricingPage> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<LanguageProvider>();
     final width = MediaQuery.of(context).size.width;
     final isMobile = width < 900;
 
@@ -51,8 +54,6 @@ class _PricingPageState extends State<PricingPage> {
             child: Column(
               children: [
                 const SizedBox(height: 72),
-
-                // Page Header
                 Container(
                   width: double.infinity,
                   padding: EdgeInsets.symmetric(
@@ -84,17 +85,20 @@ class _PricingPageState extends State<PricingPage> {
                             ),
                             const SizedBox(width: 4),
                             Text(
-                              'Back',
+                              TranslationService.t('back'),
                               style: AppTextStyles.bodySmall(context),
                             ),
                           ],
                         ),
                       ),
                       const SizedBox(height: 20),
-                      Text('FAIR LABOUR', style: AppTextStyles.label(context)),
+                      Text(
+                        TranslationService.t('pricing_label').toUpperCase(),
+                        style: AppTextStyles.label(context),
+                      ),
                       const SizedBox(height: 8),
                       Text(
-                        'Pricing Engine',
+                        TranslationService.t('pricing_title'),
                         style: AppTextStyles.h1(context).copyWith(
                           fontSize: isMobile ? 32 : 48,
                         ),
@@ -103,15 +107,13 @@ class _PricingPageState extends State<PricingPage> {
                       SizedBox(
                         width: isMobile ? double.infinity : 560,
                         child: Text(
-                          'Calculate fair wages based on skill level, region cost index, and industry overhead. All calculations follow national minimum wage guidelines.',
+                          TranslationService.t('pricing_desc'),
                           style: AppTextStyles.bodyMedium(context),
                         ),
                       ),
                     ],
                   ),
                 ),
-
-                // Main Content
                 Padding(
                   padding: EdgeInsets.symmetric(
                     horizontal: isMobile ? 24 : 80,
@@ -148,7 +150,6 @@ class _PricingPageState extends State<PricingPage> {
                           ],
                         ),
                 ),
-
                 const SizedBox(height: 60),
               ],
             ),
@@ -191,12 +192,15 @@ class _PricingPageState extends State<PricingPage> {
                 ),
               ),
               const SizedBox(width: 12),
-              Text('Input Parameters', style: AppTextStyles.h3(context)),
+              Text(
+                TranslationService.t('pricing_input_params'),
+                style: AppTextStyles.h3(context),
+              ),
             ],
           ),
           const SizedBox(height: 28),
           SliderInputWidget(
-            label: 'Base Hours / Week',
+            label: TranslationService.t('pricing_hours'),
             value: _hours,
             min: 20,
             max: 60,
@@ -208,7 +212,7 @@ class _PricingPageState extends State<PricingPage> {
           ),
           const SizedBox(height: 20),
           SliderInputWidget(
-            label: 'Skill Level',
+            label: TranslationService.t('pricing_skill'),
             value: _skill,
             min: 1,
             max: 10,
@@ -220,7 +224,7 @@ class _PricingPageState extends State<PricingPage> {
           ),
           const SizedBox(height: 20),
           SliderInputWidget(
-            label: 'Region Cost Index',
+            label: TranslationService.t('pricing_region'),
             value: _region,
             min: 60,
             max: 150,
@@ -232,7 +236,7 @@ class _PricingPageState extends State<PricingPage> {
           ),
           const SizedBox(height: 20),
           SliderInputWidget(
-            label: 'Industry Overhead',
+            label: TranslationService.t('pricing_overhead'),
             value: _overhead,
             min: 5,
             max: 40,
@@ -251,18 +255,18 @@ class _PricingPageState extends State<PricingPage> {
     final items = [
       {
         'icon': '📋',
-        'title': 'Based on National Standards',
-        'desc': 'Calculations follow Ministry of Labour guidelines.',
+        'titleKey': 'pricing_info_1_title',
+        'descKey': 'pricing_info_1_desc',
       },
       {
         'icon': '🔄',
-        'title': 'Real-time Updates',
-        'desc': 'Results update instantly as you adjust parameters.',
+        'titleKey': 'pricing_info_2_title',
+        'descKey': 'pricing_info_2_desc',
       },
       {
         'icon': '📊',
-        'title': 'Regional Benchmarks',
-        'desc': 'Region index reflects local cost of living data.',
+        'titleKey': 'pricing_info_3_title',
+        'descKey': 'pricing_info_3_desc',
       },
     ];
 
@@ -291,12 +295,12 @@ class _PricingPageState extends State<PricingPage> {
               Text(item['icon']!, style: const TextStyle(fontSize: 20)),
               const SizedBox(height: 8),
               Text(
-                item['title']!,
+                TranslationService.t(item['titleKey']!),
                 style: AppTextStyles.cardTitle(context).copyWith(fontSize: 12),
               ),
               const SizedBox(height: 4),
               Text(
-                item['desc']!,
+                TranslationService.t(item['descKey']!),
                 style: AppTextStyles.bodySmall(context).copyWith(fontSize: 11),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,

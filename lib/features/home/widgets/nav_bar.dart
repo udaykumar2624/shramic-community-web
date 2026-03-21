@@ -58,7 +58,10 @@ class _NavBarState extends State<NavBar> {
     final themeProvider = Provider.of<ThemeProvider>(context, listen: true);
 
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 16),
+      padding: EdgeInsets.symmetric(
+        horizontal: isMobile ? 16 : 40,
+        vertical: 12,
+      ),
       decoration: BoxDecoration(
         color: isDark
             ? AppColors.bg.withValues(alpha: 0.92)
@@ -68,6 +71,7 @@ class _NavBarState extends State<NavBar> {
         ),
       ),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           // Logo
           GestureDetector(
@@ -76,129 +80,151 @@ class _NavBarState extends State<NavBar> {
               'FairWork',
               style: AppTextStyles.h3(context).copyWith(
                 color: AppColors.accent,
-                fontSize: 20,
+                fontSize: 18,
               ),
             ),
           ),
-
-          const Spacer(),
 
           // Desktop Navigation
           if (!isMobile)
-            Row(
-              children: List.generate(
-                AppConstants.navItems.length,
-                (i) => MouseRegion(
-                  onEnter: (_) => setState(() => _hoveredNav = i),
-                  onExit: (_) => setState(() => _hoveredNav = -1),
-                  child: GestureDetector(
-                    onTap: () => _navigate(i),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: AnimatedDefaultTextStyle(
-                        duration: const Duration(milliseconds: 200),
-                        style: AppTextStyles.navLink(context).copyWith(
-                          color: _hoveredNav == i
-                              ? AppColors.accent
-                              : TC.textMuted(context),
-                        ),
-                        child: Text(AppConstants.navItems[i]['label']!),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-
-          const SizedBox(width: 16),
-
-          // Dark / Light Toggle
-          GestureDetector(
-            onTap: themeProvider.toggleTheme,
-            child: AnimatedContainer(
-              duration: const Duration(milliseconds: 300),
-              width: 44,
-              height: 24,
-              padding: const EdgeInsets.all(3),
-              decoration: BoxDecoration(
-                color: TC.surface2(context),
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: TC.border(context)),
-              ),
+            Expanded(
               child: Row(
-                mainAxisAlignment:
-                    isDark ? MainAxisAlignment.end : MainAxisAlignment.start,
-                children: [
-                  AnimatedContainer(
-                    duration: const Duration(milliseconds: 300),
-                    width: 16,
-                    height: 16,
-                    decoration: const BoxDecoration(
-                      color: AppColors.accent,
-                      shape: BoxShape.circle,
-                    ),
-                    child: Center(
-                      child: Text(
-                        isDark ? '🌙' : '☀️',
-                        style: const TextStyle(fontSize: 9),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-
-          const SizedBox(width: 16),
-
-          // Language Toggle
-          Container(
-            padding: const EdgeInsets.all(4),
-            decoration: BoxDecoration(
-              color: TC.surface2(context),
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: List.generate(
-                langProvider.languages.length,
-                (i) => GestureDetector(
-                  onTap: () => _switchLanguage(langProvider, i),
-                  child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 200),
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 4,
-                    ),
-                    decoration: BoxDecoration(
-                      color: langProvider.selectedIndex == i
-                          ? AppColors.accent
-                          : Colors.transparent,
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: Text(
-                      langProvider.languages[i]['label']!,
-                      style: AppTextStyles.bodySmall(context).copyWith(
-                        color: langProvider.selectedIndex == i
-                            ? AppColors.bg
-                            : TC.textMuted(context),
-                        fontWeight: FontWeight.w600,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: List.generate(
+                  AppConstants.navItems.length,
+                  (i) => MouseRegion(
+                    onEnter: (_) => setState(() => _hoveredNav = i),
+                    onExit: (_) => setState(() => _hoveredNav = -1),
+                    child: GestureDetector(
+                      onTap: () => _navigate(i),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 12),
+                        child: AnimatedDefaultTextStyle(
+                          duration: const Duration(milliseconds: 200),
+                          style: AppTextStyles.navLink(context).copyWith(
+                            color: _hoveredNav == i
+                                ? AppColors.accent
+                                : TC.textMuted(context),
+                          ),
+                          child: Text(AppConstants.navItems[i]['label']!),
+                        ),
                       ),
                     ),
                   ),
                 ),
               ),
             ),
-          ),
 
-          // Mobile Menu Icon
-          if (isMobile) ...[
-            const SizedBox(width: 16),
-            GestureDetector(
-              onTap: () => _showMobileMenu(context),
-              child: Icon(Icons.menu, color: TC.textPrimary(context)),
-            ),
-          ],
+          if (isMobile) const Spacer(),
+
+          // Right side controls
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // Dark/Light toggle
+              GestureDetector(
+                onTap: themeProvider.toggleTheme,
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 300),
+                  width: 40,
+                  height: 22,
+                  padding: const EdgeInsets.all(3),
+                  decoration: BoxDecoration(
+                    color: TC.surface2(context),
+                    borderRadius: BorderRadius.circular(11),
+                    border: Border.all(color: TC.border(context)),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: isDark
+                        ? MainAxisAlignment.end
+                        : MainAxisAlignment.start,
+                    children: [
+                      AnimatedContainer(
+                        duration: const Duration(milliseconds: 300),
+                        width: 14,
+                        height: 14,
+                        decoration: const BoxDecoration(
+                          color: AppColors.accent,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Center(
+                          child: Text(
+                            isDark ? '🌙' : '☀️',
+                            style: const TextStyle(fontSize: 8),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+              const SizedBox(width: 8),
+
+              // Language toggle — only show on desktop, mobile uses bottom sheet
+              if (!isMobile)
+                Container(
+                  padding: const EdgeInsets.all(3),
+                  decoration: BoxDecoration(
+                    color: TC.surface2(context),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: List.generate(
+                      langProvider.languages.length,
+                      (i) => GestureDetector(
+                        onTap: () => _switchLanguage(langProvider, i),
+                        child: AnimatedContainer(
+                          duration: const Duration(milliseconds: 200),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 10,
+                            vertical: 3,
+                          ),
+                          decoration: BoxDecoration(
+                            color: langProvider.selectedIndex == i
+                                ? AppColors.accent
+                                : Colors.transparent,
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          child: Text(
+                            langProvider.languages[i]['label']!,
+                            style: AppTextStyles.bodySmall(context).copyWith(
+                              color: langProvider.selectedIndex == i
+                                  ? AppColors.bg
+                                  : TC.textMuted(context),
+                              fontWeight: FontWeight.w600,
+                              fontSize: 11,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+
+              // Mobile menu icon
+              if (isMobile) ...[
+                const SizedBox(width: 8),
+                GestureDetector(
+                  onTap: () => _showMobileMenu(context),
+                  child: Container(
+                    padding: const EdgeInsets.all(6),
+                    decoration: BoxDecoration(
+                      color: TC.surface2(context),
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(color: TC.border(context)),
+                    ),
+                    child: Icon(
+                      Icons.menu,
+                      color: TC.textPrimary(context),
+                      size: 18,
+                    ),
+                  ),
+                ),
+              ],
+            ],
+          ),
         ],
       ),
     );
@@ -220,6 +246,7 @@ class _NavBarState extends State<NavBar> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            // Handle bar
             Container(
               width: 40,
               height: 4,
@@ -228,7 +255,9 @@ class _NavBarState extends State<NavBar> {
                 borderRadius: BorderRadius.circular(2),
               ),
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 20),
+
+            // Theme + Language row
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -240,7 +269,7 @@ class _NavBarState extends State<NavBar> {
                   },
                   child: Container(
                     padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
+                      horizontal: 14,
                       vertical: 10,
                     ),
                     decoration: BoxDecoration(
@@ -249,14 +278,15 @@ class _NavBarState extends State<NavBar> {
                       border: Border.all(color: TC.border(context)),
                     ),
                     child: Text(
-                      isDark ? '☀️ Light Mode' : '🌙 Dark Mode',
+                      isDark ? '☀️ Light' : '🌙 Dark',
                       style: AppTextStyles.bodySmall(context),
                     ),
                   ),
                 ),
 
-                // Language selector
+                // Language buttons
                 Row(
+                  mainAxisSize: MainAxisSize.min,
                   children: List.generate(
                     langProvider.languages.length,
                     (i) => GestureDetector(
@@ -266,7 +296,7 @@ class _NavBarState extends State<NavBar> {
                       },
                       child: AnimatedContainer(
                         duration: const Duration(milliseconds: 200),
-                        margin: const EdgeInsets.only(left: 6),
+                        margin: const EdgeInsets.only(left: 8),
                         padding: const EdgeInsets.symmetric(
                           horizontal: 12,
                           vertical: 8,
@@ -275,7 +305,7 @@ class _NavBarState extends State<NavBar> {
                           color: langProvider.selectedIndex == i
                               ? AppColors.accent
                               : TC.surface2(context),
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(10),
                           border: Border.all(color: TC.border(context)),
                         ),
                         child: Text(
@@ -293,19 +323,24 @@ class _NavBarState extends State<NavBar> {
                 ),
               ],
             ),
+
             const SizedBox(height: 16),
             Container(height: 1, color: TC.border(context)),
             const SizedBox(height: 8),
+
+            // Nav items
             ...List.generate(
               AppConstants.navItems.length,
               (i) => ListTile(
+                dense: true,
+                contentPadding: EdgeInsets.zero,
                 title: Text(
                   AppConstants.navItems[i]['label']!,
                   style: AppTextStyles.bodyLarge(context),
                 ),
                 trailing: Icon(
                   Icons.arrow_forward_ios,
-                  size: 14,
+                  size: 13,
                   color: TC.textMuted(context),
                 ),
                 onTap: () {
@@ -314,7 +349,8 @@ class _NavBarState extends State<NavBar> {
                 },
               ),
             ),
-            const SizedBox(height: 16),
+
+            const SizedBox(height: 12),
           ],
         ),
       ),

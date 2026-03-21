@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/theme_colors.dart';
 import '../../core/theme/app_text_styles.dart';
 import '../../models/story_model.dart';
 import '../../models/persona_model.dart';
 import '../../services/mock_data_service.dart';
+import '../../services/translation_service.dart';
+import '../../providers/language_provider.dart';
 import 'widgets/nav_bar.dart';
 import 'widgets/hero_section.dart';
 
@@ -13,6 +16,9 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Listen to language changes to rebuild
+    context.watch<LanguageProvider>();
+
     final metrics = MockDataService.getMetrics();
     final stories = MockDataService.getStories();
     final personas = MockDataService.getPersonas();
@@ -42,12 +48,17 @@ class HomePage extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _sectionLabel(context, 'Live Impact'),
-                      Text('Dashboard Metrics',
-                          style: AppTextStyles.h2(context)),
+                      _sectionLabel(
+                        context,
+                        TranslationService.t('metrics_label'),
+                      ),
+                      Text(
+                        TranslationService.t('metrics_title'),
+                        style: AppTextStyles.h2(context),
+                      ),
                       const SizedBox(height: 8),
                       Text(
-                        'Real-time data showing the community\'s reach and economic impact.',
+                        TranslationService.t('metrics_desc'),
                         style: AppTextStyles.bodyMedium(context),
                       ),
                       const SizedBox(height: 36),
@@ -71,7 +82,15 @@ class HomePage extends StatelessWidget {
                           return _MetricCard(
                             icon: m.icon,
                             value: m.value,
-                            label: m.label,
+                            label: TranslationService.t(
+                              i == 0
+                                  ? 'stats_workers'
+                                  : i == 1
+                                      ? 'stats_wages'
+                                      : i == 2
+                                          ? 'stats_orgs'
+                                          : 'stats_states',
+                            ),
                             valueColor: color,
                           );
                         },
@@ -88,11 +107,17 @@ class HomePage extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _sectionLabel(context, 'Stories'),
-                      Text('Success Stories', style: AppTextStyles.h2(context)),
+                      _sectionLabel(
+                        context,
+                        TranslationService.t('stories_label'),
+                      ),
+                      Text(
+                        TranslationService.t('stories_title'),
+                        style: AppTextStyles.h2(context),
+                      ),
                       const SizedBox(height: 8),
                       Text(
-                        'Real people, real change. How fair labour pricing transformed lives.',
+                        TranslationService.t('stories_desc'),
                         style: AppTextStyles.bodyMedium(context),
                       ),
                       const SizedBox(height: 36),
@@ -131,12 +156,17 @@ class HomePage extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _sectionLabel(context, 'User Personas'),
-                      Text('Who Uses This Platform?',
-                          style: AppTextStyles.h2(context)),
+                      _sectionLabel(
+                        context,
+                        TranslationService.t('personas_label'),
+                      ),
+                      Text(
+                        TranslationService.t('personas_title'),
+                        style: AppTextStyles.h2(context),
+                      ),
                       const SizedBox(height: 8),
                       Text(
-                        'Tap a persona to explore their journey with the platform.',
+                        TranslationService.t('personas_desc'),
                         style: AppTextStyles.bodyMedium(context),
                       ),
                       const SizedBox(height: 36),
@@ -161,17 +191,15 @@ class HomePage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        '© 2025 Shramic Community',
+                        TranslationService.t('footer_copy'),
                         style: AppTextStyles.bodySmall(context),
                       ),
                       RichText(
                         text: TextSpan(
                           style: AppTextStyles.bodySmall(context),
-                          children: const [
-                            TextSpan(text: 'Built with '),
+                          children: [
                             TextSpan(
-                              text: 'Flutter Web',
-                              style: TextStyle(color: AppColors.accent),
+                              text: TranslationService.t('footer_built'),
                             ),
                           ],
                         ),
@@ -204,7 +232,7 @@ class HomePage extends StatelessWidget {
   }
 }
 
-// ── Metric Card ───────────────────────────────────────────
+// Metric Card
 class _MetricCard extends StatefulWidget {
   final String icon;
   final String value;
@@ -280,7 +308,7 @@ class _MetricCardState extends State<_MetricCard> {
   }
 }
 
-// ── Story Card ────────────────────────────────────────────
+// Story Card
 class _StoryCard extends StatefulWidget {
   final StoryModel story;
   final Color accentColor;
@@ -386,7 +414,7 @@ class _StoryCardState extends State<_StoryCard> {
   }
 }
 
-// ── Personas Section ──────────────────────────────────────
+// Personas Section
 class _PersonasSection extends StatefulWidget {
   final List<PersonaModel> personas;
   const _PersonasSection({required this.personas});
@@ -400,6 +428,8 @@ class _PersonasSectionState extends State<_PersonasSection> {
 
   @override
   Widget build(BuildContext context) {
+    // Listen to language changes
+    context.watch<LanguageProvider>();
     final isMobile = MediaQuery.of(context).size.width < 768;
 
     return Column(

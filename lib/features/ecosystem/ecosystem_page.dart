@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import '../../core/theme/app_colors.dart';
+import 'package:provider/provider.dart';
 import '../../core/theme/app_text_styles.dart';
 import '../../core/theme/theme_colors.dart';
 import '../../models/eco_node_model.dart';
+import '../../providers/language_provider.dart';
 import '../../services/mock_data_service.dart';
+import '../../services/translation_service.dart';
 import '../home/widgets/nav_bar.dart';
 import 'widgets/connection_lines.dart';
 import 'widgets/eco_node_widget.dart';
@@ -42,6 +44,7 @@ class _EcosystemPageState extends State<EcosystemPage> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<LanguageProvider>();
     final width = MediaQuery.of(context).size.width;
     final isMobile = width < 900;
 
@@ -53,8 +56,6 @@ class _EcosystemPageState extends State<EcosystemPage> {
             child: Column(
               children: [
                 const SizedBox(height: 72),
-
-                // Header
                 Container(
                   width: double.infinity,
                   padding: EdgeInsets.symmetric(
@@ -86,17 +87,20 @@ class _EcosystemPageState extends State<EcosystemPage> {
                             ),
                             const SizedBox(width: 4),
                             Text(
-                              'Back',
+                              TranslationService.t('back'),
                               style: AppTextStyles.bodySmall(context),
                             ),
                           ],
                         ),
                       ),
                       const SizedBox(height: 20),
-                      Text('COMMUNITY', style: AppTextStyles.label(context)),
+                      Text(
+                        TranslationService.t('ecosystem_label').toUpperCase(),
+                        style: AppTextStyles.label(context),
+                      ),
                       const SizedBox(height: 8),
                       Text(
-                        'Ecosystem',
+                        TranslationService.t('ecosystem_title'),
                         style: AppTextStyles.h1(context).copyWith(
                           fontSize: isMobile ? 32 : 48,
                         ),
@@ -105,15 +109,13 @@ class _EcosystemPageState extends State<EcosystemPage> {
                       SizedBox(
                         width: isMobile ? double.infinity : 560,
                         child: Text(
-                          'An interconnected network of workers, organizations, NGOs, and government bodies driving fair labour change. Tap any node to explore.',
+                          TranslationService.t('ecosystem_desc'),
                           style: AppTextStyles.bodyMedium(context),
                         ),
                       ),
                     ],
                   ),
                 ),
-
-                // Main content
                 Padding(
                   padding: EdgeInsets.symmetric(
                     horizontal: isMobile ? 24 : 80,
@@ -143,7 +145,6 @@ class _EcosystemPageState extends State<EcosystemPage> {
                           ],
                         ),
                 ),
-
                 const SizedBox(height: 60),
               ],
             ),
@@ -175,7 +176,6 @@ class _EcosystemPageState extends State<EcosystemPage> {
         child: LayoutBuilder(
           builder: (context, constraints) {
             final canvasSize = Size(constraints.maxWidth, canvasHeight);
-
             return Stack(
               children: [
                 Container(
@@ -205,7 +205,6 @@ class _EcosystemPageState extends State<EcosystemPage> {
                   final node = entry.value;
                   final left = node.x * canvasSize.width - node.size / 2;
                   final top = node.y * canvasSize.height - node.size / 2;
-
                   return Positioned(
                     left: left.clamp(0, canvasSize.width - node.size),
                     top: top.clamp(0, canvasSize.height - node.size),
@@ -244,7 +243,7 @@ class _EcosystemPageState extends State<EcosystemPage> {
                           border: Border.all(color: TC.border(context)),
                         ),
                         child: Text(
-                          '👆 Tap any node to explore',
+                          TranslationService.t('ecosystem_tap_hint'),
                           style: AppTextStyles.bodySmall(context),
                         ),
                       ),
@@ -270,15 +269,18 @@ class _EcosystemPageState extends State<EcosystemPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Node Details', style: AppTextStyles.h3(context)),
+            Text(
+              TranslationService.t('ecosystem_node_details'),
+              style: AppTextStyles.h3(context),
+            ),
             const SizedBox(height: 10),
             Text(
-              'Tap any node to see its role and connections.',
+              TranslationService.t('ecosystem_node_hint'),
               style: AppTextStyles.bodyMedium(context),
             ),
             const SizedBox(height: 20),
             Text(
-              'ALL NODES',
+              TranslationService.t('ecosystem_all_nodes').toUpperCase(),
               style: AppTextStyles.label(context).copyWith(fontSize: 10),
             ),
             const SizedBox(height: 10),
@@ -306,7 +308,7 @@ class _EcosystemPageState extends State<EcosystemPage> {
                       ),
                     ),
                     Text(
-                      '${_getConnectedNodes(n).length} links',
+                      '${_getConnectedNodes(n).length} ${TranslationService.t('ecosystem_links')}',
                       style: AppTextStyles.bodySmall(context).copyWith(
                         color: n.color,
                         fontSize: 10,
@@ -342,7 +344,6 @@ class _EcosystemPageState extends State<EcosystemPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          // Node header
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -374,7 +375,7 @@ class _EcosystemPageState extends State<EcosystemPage> {
                       overflow: TextOverflow.ellipsis,
                     ),
                     Text(
-                      '${connectedNodes.length} connections',
+                      '${connectedNodes.length} ${TranslationService.t('ecosystem_connections')}',
                       style: AppTextStyles.bodySmall(context).copyWith(
                         color: node.color,
                         fontWeight: FontWeight.w600,
@@ -402,28 +403,21 @@ class _EcosystemPageState extends State<EcosystemPage> {
               ),
             ],
           ),
-
           const SizedBox(height: 12),
           Container(height: 1, color: TC.border(context)),
           const SizedBox(height: 12),
-
-          // Description
           Text(
             node.description,
             style: AppTextStyles.bodySmall(context).copyWith(height: 1.5),
             maxLines: 3,
             overflow: TextOverflow.ellipsis,
           ),
-
           const SizedBox(height: 16),
-
           Text(
-            'CONNECTED TO (${connectedNodes.length})',
+            '${TranslationService.t('ecosystem_connected_to')} (${connectedNodes.length})',
             style: AppTextStyles.label(context).copyWith(fontSize: 10),
           ),
           const SizedBox(height: 10),
-
-          // Connected node chips
           Wrap(
             spacing: 8,
             runSpacing: 8,
@@ -445,10 +439,7 @@ class _EcosystemPageState extends State<EcosystemPage> {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text(
-                        n.emoji,
-                        style: const TextStyle(fontSize: 13),
-                      ),
+                      Text(n.emoji, style: const TextStyle(fontSize: 13)),
                       const SizedBox(width: 6),
                       Text(
                         n.label,
@@ -464,12 +455,9 @@ class _EcosystemPageState extends State<EcosystemPage> {
               );
             }).toList(),
           ),
-
           const SizedBox(height: 16),
           Container(height: 1, color: TC.border(context)),
           const SizedBox(height: 12),
-
-          // Tap hint
           Row(
             children: [
               Icon(
@@ -480,7 +468,7 @@ class _EcosystemPageState extends State<EcosystemPage> {
               const SizedBox(width: 6),
               Expanded(
                 child: Text(
-                  'Tap a chip above to explore that node',
+                  TranslationService.t('ecosystem_chip_hint'),
                   style: AppTextStyles.bodySmall(context).copyWith(
                     fontSize: 11,
                     color: TC.textMuted(context),

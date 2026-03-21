@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_text_styles.dart';
 import '../../core/theme/theme_colors.dart';
 import '../../models/persona_model.dart';
+import '../../providers/language_provider.dart';
 import '../../services/mock_data_service.dart';
+import '../../services/translation_service.dart';
 import '../home/widgets/nav_bar.dart';
 
 class PersonasPage extends StatefulWidget {
@@ -26,6 +29,7 @@ class _PersonasPageState extends State<PersonasPage> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<LanguageProvider>();
     final width = MediaQuery.of(context).size.width;
     final isMobile = width < 900;
 
@@ -37,8 +41,6 @@ class _PersonasPageState extends State<PersonasPage> {
             child: Column(
               children: [
                 const SizedBox(height: 72),
-
-                // Header
                 Container(
                   width: double.infinity,
                   padding: EdgeInsets.symmetric(
@@ -70,7 +72,7 @@ class _PersonasPageState extends State<PersonasPage> {
                             ),
                             const SizedBox(width: 4),
                             Text(
-                              'Back',
+                              TranslationService.t('back'),
                               style: AppTextStyles.bodySmall(context),
                             ),
                           ],
@@ -78,26 +80,24 @@ class _PersonasPageState extends State<PersonasPage> {
                       ),
                       const SizedBox(height: 20),
                       Text(
-                        'PLATFORM USERS',
+                        TranslationService.t('personas_label').toUpperCase(),
                         style: AppTextStyles.label(context),
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        'User Personas',
+                        TranslationService.t('personas_title'),
                         style: AppTextStyles.h1(context).copyWith(
                           fontSize: isMobile ? 32 : 48,
                         ),
                       ),
                       const SizedBox(height: 12),
                       Text(
-                        'Understanding who uses this platform and how it helps them achieve fair labour outcomes.',
+                        TranslationService.t('personas_desc'),
                         style: AppTextStyles.bodyMedium(context),
                       ),
                     ],
                   ),
                 ),
-
-                // Personas Grid
                 Padding(
                   padding: EdgeInsets.symmetric(
                     horizontal: isMobile ? 24 : 80,
@@ -171,8 +171,6 @@ class _PersonasPageState extends State<PersonasPage> {
                           );
                         },
                       ),
-
-                      // Detail panel
                       if (_selected != null) ...[
                         const SizedBox(height: 24),
                         _DetailPanel(
@@ -184,7 +182,6 @@ class _PersonasPageState extends State<PersonasPage> {
                     ],
                   ),
                 ),
-
                 const SizedBox(height: 60),
               ],
             ),
@@ -232,7 +229,6 @@ class _DetailPanel extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Header row
           Row(
             children: [
               Container(
@@ -285,12 +281,9 @@ class _DetailPanel extends StatelessWidget {
               ),
             ],
           ),
-
           const SizedBox(height: 16),
           Container(height: 1, color: TC.border(context)),
           const SizedBox(height: 16),
-
-          // Pain point
           Container(
             padding: const EdgeInsets.all(14),
             decoration: BoxDecoration(
@@ -316,15 +309,13 @@ class _DetailPanel extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16),
-
           Text(
             persona.description,
             style: AppTextStyles.bodyMedium(context),
           ),
           const SizedBox(height: 20),
-
           Text(
-            'NEEDS',
+            TranslationService.t('personas_needs').toUpperCase(),
             style: AppTextStyles.label(context).copyWith(fontSize: 10),
           ),
           const SizedBox(height: 12),

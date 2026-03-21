@@ -146,76 +146,76 @@ class MockDataService {
 
   static List<EcoNodeModel> getEcoNodes() {
     return [
-      EcoNodeModel(
+      const EcoNodeModel(
         id: 'platform',
         emoji: '🌐',
         label: 'Platform',
         description:
             'The central FairWork platform connecting all stakeholders with transparent labour data and tools.',
         connections: ['workers', 'ngo', 'employers', 'government', 'unions'],
-        color: const Color(0xFF3DFFA0),
+        color: Color(0xFF3DFFA0),
         x: 0.5,
-        y: 0.45,
+        y: 0.42,
         size: 80,
       ),
-      EcoNodeModel(
+      const EcoNodeModel(
         id: 'workers',
         emoji: '👷',
         label: 'Workers',
         description:
             'Daily wage and skilled workers who use the platform to understand fair wages and negotiate better pay.',
-        connections: ['platform', 'unions'],
-        color: const Color(0xFFFFCD3D),
+        connections: ['platform', 'unions', 'employers', 'ngo'],
+        color: Color(0xFFFFCD3D),
         x: 0.2,
-        y: 0.2,
+        y: 0.18,
         size: 65,
       ),
-      EcoNodeModel(
+      const EcoNodeModel(
         id: 'ngo',
         emoji: '🌱',
         label: 'NGOs',
         description:
             'Community organizations that advocate for workers rights and use platform data for reporting.',
-        connections: ['platform', 'workers', 'government'],
-        color: const Color(0xFF8AB4FF),
-        x: 0.78,
+        connections: ['platform', 'workers', 'government', 'unions'],
+        color: Color(0xFF8AB4FF),
+        x: 0.80,
         y: 0.18,
         size: 62,
       ),
-      EcoNodeModel(
+      const EcoNodeModel(
         id: 'employers',
         emoji: '🏢',
         label: 'Employers',
         description:
-            'SMEs and contractors who use fair pricing engine to set compliant wages and build trust.',
-        connections: ['platform', 'workers'],
-        color: const Color(0xFFFF6B6B),
+            'SMEs and contractors who use fair pricing engine to set compliant wages and build worker trust.',
+        connections: ['platform', 'workers', 'unions', 'government'],
+        color: Color(0xFFFF6B6B),
         x: 0.15,
-        y: 0.72,
+        y: 0.74,
         size: 62,
       ),
-      EcoNodeModel(
+      const EcoNodeModel(
         id: 'government',
         emoji: '⚖️',
         label: 'Government',
         description:
             'Policy makers who use dashboard metrics to design minimum wage policies and track compliance.',
-        connections: ['platform', 'ngo'],
-        color: const Color(0xFFFF9F43),
-        x: 0.82,
-        y: 0.72,
+        connections: ['platform', 'ngo', 'employers'],
+        color: Color(0xFFFF9F43),
+        x: 0.84,
+        y: 0.74,
         size: 60,
       ),
-      EcoNodeModel(
+      const EcoNodeModel(
         id: 'unions',
         emoji: '✊',
         label: 'Unions',
         description:
-            'Worker unions that use platform data to negotiate collective bargaining agreements.',
-        connections: ['platform', 'workers', 'employers'],
-        color: const Color(0xFFE056FD),
+            'Worker unions that use platform data to negotiate collective bargaining agreements on behalf of workers.',
+        connections: ['platform', 'workers', 'employers', 'ngo'],
+        color: Color(0xFFE056FD),
         x: 0.5,
-        y: 0.85,
+        y: 0.86,
         size: 58,
       ),
     ];

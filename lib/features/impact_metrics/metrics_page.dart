@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_text_styles.dart';
 import '../../core/theme/theme_colors.dart';
+import '../../providers/language_provider.dart';
+import '../../services/translation_service.dart';
 import '../home/widgets/nav_bar.dart';
 import 'widgets/metric_card_widget.dart';
 import 'widgets/chart_widget.dart';
@@ -11,6 +14,7 @@ class MetricsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<LanguageProvider>();
     final width = MediaQuery.of(context).size.width;
     final isMobile = width < 900;
     final hPadding = isMobile ? 24.0 : 80.0;
@@ -24,8 +28,6 @@ class MetricsPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 72),
-
-                // Header
                 Container(
                   width: double.infinity,
                   padding: EdgeInsets.symmetric(
@@ -57,17 +59,20 @@ class MetricsPage extends StatelessWidget {
                             ),
                             const SizedBox(width: 4),
                             Text(
-                              'Back',
+                              TranslationService.t('back'),
                               style: AppTextStyles.bodySmall(context),
                             ),
                           ],
                         ),
                       ),
                       const SizedBox(height: 20),
-                      Text('LIVE DATA', style: AppTextStyles.label(context)),
+                      Text(
+                        TranslationService.t('metrics_label').toUpperCase(),
+                        style: AppTextStyles.label(context),
+                      ),
                       const SizedBox(height: 8),
                       Text(
-                        'Impact Metrics',
+                        TranslationService.t('metrics_title'),
                         style: AppTextStyles.h1(context).copyWith(
                           fontSize: isMobile ? 32 : 48,
                         ),
@@ -76,13 +81,11 @@ class MetricsPage extends StatelessWidget {
                       SizedBox(
                         width: isMobile ? double.infinity : 560,
                         child: Text(
-                          'Real-time data showing the community\'s reach, economic impact, and growth across India.',
+                          TranslationService.t('metrics_desc'),
                           style: AppTextStyles.bodyMedium(context),
                         ),
                       ),
                       const SizedBox(height: 20),
-
-                      // Live indicator
                       Row(
                         children: [
                           Container(
@@ -95,7 +98,7 @@ class MetricsPage extends StatelessWidget {
                           ),
                           const SizedBox(width: 8),
                           Text(
-                            'Live — Updated just now',
+                            TranslationService.t('metrics_live'),
                             style: AppTextStyles.bodySmall(context).copyWith(
                               color: AppColors.accent,
                             ),
@@ -105,8 +108,6 @@ class MetricsPage extends StatelessWidget {
                     ],
                   ),
                 ),
-
-                // Metric Cards Grid
                 Padding(
                   padding: EdgeInsets.symmetric(
                     horizontal: hPadding,
@@ -116,7 +117,7 @@ class MetricsPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'KEY METRICS',
+                        TranslationService.t('metrics_key').toUpperCase(),
                         style:
                             AppTextStyles.label(context).copyWith(fontSize: 10),
                       ),
@@ -128,42 +129,46 @@ class MetricsPage extends StatelessWidget {
                         crossAxisSpacing: 16,
                         mainAxisSpacing: 16,
                         childAspectRatio: isMobile ? 0.9 : 1.0,
-                        children: const [
+                        children: [
                           MetricCardWidget(
                             icon: '👷',
                             value: 48200,
-                            label: 'Workers Protected',
-                            sublabel: 'via Fair Pricing Engine',
-                            accentColor: Color(0xFF3DFFA0),
+                            label: TranslationService.t('stats_workers'),
+                            sublabel: TranslationService.t(
+                              'metrics_workers_sub',
+                            ),
+                            accentColor: const Color(0xFF3DFFA0),
                           ),
                           MetricCardWidget(
                             icon: '💰',
                             value: 12,
                             prefix: '₹',
                             suffix: ' Cr+',
-                            label: 'Fair Wages',
-                            sublabel: 'Distributed this year',
-                            accentColor: Color(0xFFFFCD3D),
+                            label: TranslationService.t('stats_wages'),
+                            sublabel: TranslationService.t('metrics_wages_sub'),
+                            accentColor: const Color(0xFFFFCD3D),
                           ),
                           MetricCardWidget(
                             icon: '🏢',
                             value: 320,
-                            label: 'Organizations',
-                            sublabel: 'Using Fair Labour Standards',
-                            accentColor: Color(0xFF8AB4FF),
+                            label: TranslationService.t('stats_orgs'),
+                            sublabel: TranslationService.t('metrics_orgs_sub'),
+                            accentColor: const Color(0xFF8AB4FF),
                           ),
                           MetricCardWidget(
                             icon: '📍',
                             value: 18,
-                            label: 'States Covered',
-                            sublabel: 'Across India',
-                            accentColor: Color(0xFFFF6B6B),
+                            label: TranslationService.t('stats_states'),
+                            sublabel: TranslationService.t(
+                              'metrics_states_sub',
+                            ),
+                            accentColor: const Color(0xFFFF6B6B),
                           ),
                         ],
                       ),
                       const SizedBox(height: 40),
                       Text(
-                        'ANALYTICS',
+                        TranslationService.t('metrics_analytics').toUpperCase(),
                         style:
                             AppTextStyles.label(context).copyWith(fontSize: 10),
                       ),
@@ -186,7 +191,8 @@ class MetricsPage extends StatelessWidget {
                             ),
                       const SizedBox(height: 40),
                       Text(
-                        'STATE COVERAGE',
+                        TranslationService.t('metrics_state_coverage')
+                            .toUpperCase(),
                         style:
                             AppTextStyles.label(context).copyWith(fontSize: 10),
                       ),
@@ -195,7 +201,6 @@ class MetricsPage extends StatelessWidget {
                     ],
                   ),
                 ),
-
                 const SizedBox(height: 60),
               ],
             ),
@@ -274,7 +279,7 @@ class MetricsPage extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      '${s['workers']} workers',
+                      '${s['workers']} ${TranslationService.t('workers_count')}',
                       style: AppTextStyles.bodySmall(context).copyWith(
                         color: color,
                       ),

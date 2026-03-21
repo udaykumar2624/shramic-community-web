@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_text_styles.dart';
 import '../../core/theme/theme_colors.dart';
+import '../../providers/language_provider.dart';
+import '../../services/translation_service.dart';
 import '../home/widgets/nav_bar.dart';
 import '../pricing_engine/widgets/slider_input_widget.dart';
 import 'calculator_controller.dart';
@@ -19,6 +22,7 @@ class _CalculatorPageState extends State<CalculatorPage> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<LanguageProvider>();
     final width = MediaQuery.of(context).size.width;
     final isMobile = width < 900;
 
@@ -30,8 +34,6 @@ class _CalculatorPageState extends State<CalculatorPage> {
             child: Column(
               children: [
                 const SizedBox(height: 72),
-
-                // Header
                 Container(
                   width: double.infinity,
                   padding: EdgeInsets.symmetric(
@@ -63,7 +65,7 @@ class _CalculatorPageState extends State<CalculatorPage> {
                             ),
                             const SizedBox(width: 4),
                             Text(
-                              'Back',
+                              TranslationService.t('back'),
                               style: AppTextStyles.bodySmall(context),
                             ),
                           ],
@@ -71,12 +73,12 @@ class _CalculatorPageState extends State<CalculatorPage> {
                       ),
                       const SizedBox(height: 20),
                       Text(
-                        'WAGE CALCULATOR',
+                        TranslationService.t('calculator_label').toUpperCase(),
                         style: AppTextStyles.label(context),
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        'Calculate Fair Wages',
+                        TranslationService.t('calculator_title'),
                         style: AppTextStyles.h1(context).copyWith(
                           fontSize: isMobile ? 32 : 48,
                         ),
@@ -85,15 +87,13 @@ class _CalculatorPageState extends State<CalculatorPage> {
                       SizedBox(
                         width: isMobile ? double.infinity : 560,
                         child: Text(
-                          'Select your industry, state, and work parameters to get a fair wage recommendation based on real data.',
+                          TranslationService.t('calculator_desc'),
                           style: AppTextStyles.bodyMedium(context),
                         ),
                       ),
                     ],
                   ),
                 ),
-
-                // Content
                 Padding(
                   padding: EdgeInsets.symmetric(
                     horizontal: isMobile ? 24 : 80,
@@ -131,7 +131,6 @@ class _CalculatorPageState extends State<CalculatorPage> {
                     },
                   ),
                 ),
-
                 const SizedBox(height: 60),
               ],
             ),
@@ -150,7 +149,6 @@ class _CalculatorPageState extends State<CalculatorPage> {
   Widget _inputSection(BuildContext context, bool isMobile) {
     return Column(
       children: [
-        // Dropdowns
         Container(
           padding: const EdgeInsets.all(24),
           decoration: BoxDecoration(
@@ -177,12 +175,15 @@ class _CalculatorPageState extends State<CalculatorPage> {
                     ),
                   ),
                   const SizedBox(width: 12),
-                  Text('Select Category', style: AppTextStyles.h3(context)),
+                  Text(
+                    TranslationService.t('calculator_select_category'),
+                    style: AppTextStyles.h3(context),
+                  ),
                 ],
               ),
               const SizedBox(height: 24),
               Text(
-                'INDUSTRY',
+                TranslationService.t('calculator_industry').toUpperCase(),
                 style: AppTextStyles.label(context).copyWith(
                   color: TC.textMuted(context),
                   fontSize: 10,
@@ -197,7 +198,7 @@ class _CalculatorPageState extends State<CalculatorPage> {
               ),
               const SizedBox(height: 20),
               Text(
-                'STATE',
+                TranslationService.t('calculator_state').toUpperCase(),
                 style: AppTextStyles.label(context).copyWith(
                   color: TC.textMuted(context),
                   fontSize: 10,
@@ -213,10 +214,7 @@ class _CalculatorPageState extends State<CalculatorPage> {
             ],
           ),
         ),
-
         const SizedBox(height: 20),
-
-        // Sliders
         Container(
           padding: const EdgeInsets.all(24),
           decoration: BoxDecoration(
@@ -243,7 +241,10 @@ class _CalculatorPageState extends State<CalculatorPage> {
                     ),
                   ),
                   const SizedBox(width: 12),
-                  Text('Work Parameters', style: AppTextStyles.h3(context)),
+                  Text(
+                    TranslationService.t('calculator_work_params'),
+                    style: AppTextStyles.h3(context),
+                  ),
                   const Spacer(),
                   GestureDetector(
                     onTap: _controller.reset,
@@ -258,7 +259,7 @@ class _CalculatorPageState extends State<CalculatorPage> {
                         border: Border.all(color: TC.border(context)),
                       ),
                       child: Text(
-                        'Reset',
+                        TranslationService.t('reset'),
                         style: AppTextStyles.bodySmall(context).copyWith(
                           color: TC.textMuted(context),
                         ),
@@ -269,7 +270,7 @@ class _CalculatorPageState extends State<CalculatorPage> {
               ),
               const SizedBox(height: 24),
               SliderInputWidget(
-                label: 'Hours per Week',
+                label: TranslationService.t('calculator_hours'),
                 value: _controller.hours,
                 min: 20,
                 max: 60,
@@ -278,7 +279,7 @@ class _CalculatorPageState extends State<CalculatorPage> {
               ),
               const SizedBox(height: 20),
               SliderInputWidget(
-                label: 'Skill Level',
+                label: TranslationService.t('calculator_skill'),
                 value: _controller.skill,
                 min: 1,
                 max: 10,
@@ -287,7 +288,7 @@ class _CalculatorPageState extends State<CalculatorPage> {
               ),
               const SizedBox(height: 20),
               SliderInputWidget(
-                label: 'Region Cost Index',
+                label: TranslationService.t('calculator_region'),
                 value: _controller.region,
                 min: 60,
                 max: 150,
@@ -296,7 +297,7 @@ class _CalculatorPageState extends State<CalculatorPage> {
               ),
               const SizedBox(height: 20),
               SliderInputWidget(
-                label: 'Industry Overhead',
+                label: TranslationService.t('calculator_overhead'),
                 value: _controller.overhead,
                 min: 5,
                 max: 40,
@@ -306,10 +307,7 @@ class _CalculatorPageState extends State<CalculatorPage> {
             ],
           ),
         ),
-
         const SizedBox(height: 20),
-
-        // Compare row
         Container(
           padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
@@ -327,7 +325,12 @@ class _CalculatorPageState extends State<CalculatorPage> {
               const SizedBox(width: 10),
               Expanded(
                 child: Text(
-                  'National minimum wage: ₹15,000/month. Your result is ${_controller.result.isFairLabourCompliant ? "above" : "below"} this threshold.',
+                  TranslationService.t('calculator_min_wage_note').replaceAll(
+                    '{status}',
+                    _controller.result.isFairLabourCompliant
+                        ? TranslationService.t('above')
+                        : TranslationService.t('below'),
+                  ),
                   style: AppTextStyles.bodySmall(context),
                 ),
               ),

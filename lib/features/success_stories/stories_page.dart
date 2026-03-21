@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_text_styles.dart';
 import '../../core/theme/theme_colors.dart';
 import '../../models/story_model.dart';
+import '../../providers/language_provider.dart';
 import '../../services/mock_data_service.dart';
+import '../../services/translation_service.dart';
 import '../home/widgets/nav_bar.dart';
 
 class StoriesPage extends StatelessWidget {
@@ -11,6 +14,7 @@ class StoriesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<LanguageProvider>();
     final stories = MockDataService.getStories();
     final width = MediaQuery.of(context).size.width;
     final isMobile = width < 900;
@@ -23,8 +27,6 @@ class StoriesPage extends StatelessWidget {
             child: Column(
               children: [
                 const SizedBox(height: 72),
-
-                // Header
                 Container(
                   width: double.infinity,
                   padding: EdgeInsets.symmetric(
@@ -56,31 +58,32 @@ class StoriesPage extends StatelessWidget {
                             ),
                             const SizedBox(width: 4),
                             Text(
-                              'Back',
+                              TranslationService.t('back'),
                               style: AppTextStyles.bodySmall(context),
                             ),
                           ],
                         ),
                       ),
                       const SizedBox(height: 20),
-                      Text('COMMUNITY', style: AppTextStyles.label(context)),
+                      Text(
+                        TranslationService.t('stories_label').toUpperCase(),
+                        style: AppTextStyles.label(context),
+                      ),
                       const SizedBox(height: 8),
                       Text(
-                        'Success Stories',
+                        TranslationService.t('stories_title'),
                         style: AppTextStyles.h1(context).copyWith(
                           fontSize: isMobile ? 32 : 48,
                         ),
                       ),
                       const SizedBox(height: 12),
                       Text(
-                        'Real people, real change. How fair labour pricing transformed lives across India.',
+                        TranslationService.t('stories_desc'),
                         style: AppTextStyles.bodyMedium(context),
                       ),
                     ],
                   ),
                 ),
-
-                // Stories Grid
                 Padding(
                   padding: EdgeInsets.symmetric(
                     horizontal: isMobile ? 24 : 80,
@@ -109,7 +112,6 @@ class StoriesPage extends StatelessWidget {
                     },
                   ),
                 ),
-
                 const SizedBox(height: 60),
               ],
             ),
