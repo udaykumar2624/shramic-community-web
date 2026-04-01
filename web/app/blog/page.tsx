@@ -15,14 +15,14 @@ function getImage(slug: string) {
     "fair-wage-system":
       "https://images.unsplash.com/photo-1601597111158-2fceff292cdc?q=80&w=1200",
 
-    "shramic-community":
-      "https://images.unsplash.com/photo-1590080875515-8a3a8dc5735e?q=80&w=1200",
+    "rural-development":
+      "https://imgs.search.brave.com/VUEwweFmy29xGy8F1UUqjm7KttCCRDQpILY_NE8gU9k/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvMTI4/MTExMjU0OC9waG90/by9hZXJpYWwtdmll/dy1jb21iaW5lLWhh/cnZlc3Rlci13b3Jr/aW5nLW9uLXRoZS1w/YWRkeS1maWVsZC1p/bi1hdXR1bW4uanBn/P3M9NjEyeDYxMiZ3/PTAmaz0yMCZjPS13/cF9RMlI5eGRPeWNh/c3hZU2JJaUVoZGlv/TmJVS25tbjU1eG9K/T1paU009",
 
-    "labour-digitalization":
-      "https://images.unsplash.com/photo-1589927986089-35812388d1f4?q=80&w=1200",
+    "digital-farming":
+      "https://images.unsplash.com/photo-1574943320219-553eb213f72d?q=80&w=1200",
 
-    "worker-empowerment":
-      "https://images.unsplash.com/photo-1590496793929-36417d3117de?q=80&w=1200",
+    "labour-rights":
+      "https://imgs.search.brave.com/K6Vdk6prr2DCQXbWu94Rb8QwFg8lS2NkMzp0rO_HP4s/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9zdGF0/aWMudmVjdGVlenku/Y29tL3N5c3RlbS9y/ZXNvdXJjZXMvdGh1/bWJuYWlscy8wNzIv/NDQzLzI0MC9zbWFs/bC91bmRlcnN0YW5k/aW5nLWxhYm91ci1s/YXctcHJpbmNpcGxl/cy1lc3NlbnRpYWwt/Zm9yLWZhaXItd29y/a3BsYWNlLXByYWN0/aWNlcy1waG90by5q/cGc"
   };
 
   return images[slug] || images["fair-wage-system"];
