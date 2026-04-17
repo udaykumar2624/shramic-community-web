@@ -1,0 +1,7 @@
+touch .gitignore
+```
+
+Paste this inside:
+```
+node_modules/
+.env
