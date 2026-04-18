@@ -1,4 +1,24 @@
+import type { Metadata } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
+
+export const metadata: Metadata = {
+  title: "Shramic Community",
+  description: "Digital platform for rural and unorganised workers",
+};
 
 export default function RootLayout({
   children,
@@ -7,8 +27,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="bg-white text-black">
-        {children}
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}
+      >
+        <Navbar />
+
+        <main className="grow">
+          {children}
+        </main>
+
+        <Footer />
       </body>
     </html>
   );

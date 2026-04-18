@@ -1,36 +1,66 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Shramic Web Application
 
-## Getting Started
+## 🚀 Overview
+This is a full-stack web application built using Next.js, Node.js, and MongoDB Atlas.
 
-First, run the development server:
+- Homepage developed by James  
+- Blog module developed by Jeevan  
 
-```bash
+---
+
+## 🛠️ Tech Stack
+- Frontend: Next.js, React, Tailwind CSS  
+- Backend: Node.js, Express.js  
+- Database: MongoDB Atlas  
+
+---
+
+## 📌 Features
+- Responsive homepage  
+- Blog listing page  
+- Dynamic blog pages using slug  
+- Backend API integration  
+- MongoDB database storage  
+
+---
+
+## ⚙️ Getting Started
+
+### 1. Install dependencies
+npm install
+
+### 2. Run frontend
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 3. Open in browser
+http://localhost:3000
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🔗 Backend Requirement (Important)
+Make sure backend server is running:
 
-## Learn More
+cd backend  
+npm install  
+npx nodemon server.js  
 
-To learn more about Next.js, take a look at the following resources:
+Backend runs on:
+http://localhost:5000
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🌐 API Endpoints
+- GET /api/blog/posts  
+- GET /api/blog/posts/:slug  
+- POST /api/blog/posts  
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🧠 Note
+- Ensure MongoDB connection is set using environment variables  
+- Allow IP access in MongoDB Atlas  
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 📚 Learn More
+- https://nextjs.org/docs
