@@ -1,8 +1,7 @@
 import { notFound } from "next/navigation";
 
 async function getPost(slug: string) {
-  const res = await fetch(
-    `http://localhost:5000/api/blog/posts/${slug}`,
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/blog/posts/${slug}`,
     { cache: "no-store" }
   );
 
