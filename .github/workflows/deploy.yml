@@ -20,8 +20,8 @@ jobs:
           script: |
             cd /home/ubuntu
             rm -rf *
-
-            git clone https://github.com/udaykumar2624/Blogger.git
-            cd Blogger
+            git clone https://github.com/udaykumar2624/shramic-community-web.git
+            cd shramic-community-web
+            docker-compose down -v
             docker system prune -a -f
             docker-compose up -d --build
