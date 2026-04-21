@@ -20,7 +20,7 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - NEXT_PUBLIC_API_URL=http://backend:5000/api
+      - NEXT_PUBLIC_API_URL=http://40.192.34.135:5000/api
     depends_on:
       - backend
     restart: unless-stopped
