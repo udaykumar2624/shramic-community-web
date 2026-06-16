@@ -28,8 +28,27 @@ function getImage(slug: string) {
   return images[slug] || images["fair-wage-system"];
 }
 
+const localStories = [
+  {
+    slug: 'women-led-farming-collective',
+    title: 'Women-Led Farming Collective Finds Fair Pay',
+    content: 'A group of women farmers in Maharashtra found renewed opportunity after joining Shramic, helping them access steady contracts and price transparency.',
+  },
+  {
+    slug: 'organic-village-labour-network',
+    title: 'Organic Village Labour Network Blossoms',
+    content: 'A village cooperative adopted digital wage tracking and now shares profits more fairly across 120 workers.',
+  },
+  {
+    slug: 'tech-training-boosts-income',
+    title: 'Tech Training Boosts Rural Income by 2x',
+    content: 'Digital skill programs helped a young worker move from daily wages to field tech support with a stable salary.',
+  },
+];
+
 export default async function BlogPage() {
   const posts = await getPosts();
+  const combinedPosts = [...(posts || []), ...localStories];
 
   return (
     <main className="bg-gradient-to-b from-slate-950 to-black min-h-screen text-white">
@@ -92,13 +111,13 @@ export default async function BlogPage() {
 
       {/* BLOG GRID */}
       <section className="px-6 md:px-12 lg:px-24 pb-24">
-        {posts.length === 0 ? (
+        {combinedPosts.length === 0 ? (
           <p className="text-center text-gray-400">
             No stories available yet.
           </p>
         ) : (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
-            {posts.map((post: any) => (
+            {combinedPosts.map((post: any) => (
               <Link href={`/blog/${post.slug}`} key={post.slug}>
                 <div className="group bg-white/5 border border-white/10 rounded-2xl overflow-hidden hover:scale-[1.03] transition duration-500 shadow-xl hover:shadow-emerald-500/20 cursor-pointer">
 

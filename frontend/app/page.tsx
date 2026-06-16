@@ -1,3 +1,4 @@
+import Link from "next/link";
 import ImpactStats from "../components/ImpactStats";
 import Testimonials from "../components/Testimonials";
 import CTA from "../components/CTA";
@@ -16,9 +17,9 @@ export default function Home() {
           Shramic platform enables transparency and fair labour pricing.
         </p>
 
-        <button className="mt-6 bg-black text-white px-6 py-2 rounded">
+        <Link href="/join-community" className="inline-flex mt-6 bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition">
           Join Community
-        </button>
+        </Link>
       </section>
 
       {/* Mission */}
