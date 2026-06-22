@@ -14,9 +14,9 @@ jobs:
       - name: Deploy via SSH
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: ${{ secrets.SSH_HOST }}
+          host: ${{ SECRETS_SSH_HOST }}
           username: ubuntu
-          key: ${{ secrets.SSH_KEY }}
+          key: ${{ SECRETS_SSH_KEY }}
           script: |
             cd /home/ubuntu
             rm -rf *
